@@ -2,8 +2,6 @@
 
 <div align="center">
 
-  ![IngreCheck Banner](https://images.unsplash.com/photo-1516594798947-e65505dbb29d?q=80&w=2070&auto=format&fit=crop)
-
   <br />
 
   <h1>Know What You Consume.</h1>
@@ -77,7 +75,7 @@ To run this project locally, follow these steps:
     ```
 
 4.  **Open the app**
-    Visit [http://localhost:3000](http://localhost:3000) to view the application.
+    Visit [https://ingre-check-web-app.vercel.app/](https://ingre-check-web-app.vercel.app/) to view the application.
 
 ## 📦 Deployment
 
