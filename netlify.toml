@@ -1,0 +1,18 @@
+[images]
+  remote_images = [
+    "https://images.openfoodfacts.org/**",
+    "https://images.pexels.com/**",
+    "https://m.media-amazon.com/**",
+    "https://miro.medium.com/**"
+  ]
+
+[build]
+  command = "bun run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "18"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

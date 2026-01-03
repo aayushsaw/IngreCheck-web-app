@@ -1,0 +1,51 @@
+
+> nextjs-shadcn@0.1.0 lint
+> next lint
+
+
+./src/app/scan/page.tsx
+35:55  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+36:31  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+44:31  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+55:68  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/EnhancedHealthierAlternatives.tsx
+89:33  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/ProductAlternativesTab.tsx
+80:37  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/WeeklyConsumptionTracker.tsx
+6:24  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/context/AuthContext.tsx
+46:20  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+72:20  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/hooks/useCategoryAlternatives.ts
+272:50  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+391:45  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+408:51  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+410:29  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+415:31  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+415:39  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+439:59  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+440:62  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+465:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/hooks/useEnhancedHealthierAlternatives.ts
+34:14  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+58:50  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+401:41  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+419:17  Error: 'candidates' is never reassigned. Use 'const' instead.  prefer-const
+419:77  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+531:30  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/hooks/useHealthierCategoryAlternatives.ts
+21:14  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+309:96  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+326:41  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+357:41  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+411:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
