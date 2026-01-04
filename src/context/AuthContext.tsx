@@ -3,24 +3,22 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { supabase } from '@/lib/supabase';
+import type { User as SupabaseUser } from '@supabase/supabase-js';
 
-// Mock user type
+// User type matching Supabase auth user
 export interface User {
     id: string;
-    name: string;
     email: string;
-}
-
-interface RegisteredUser extends User {
-    password?: string;
+    name?: string;
 }
 
 interface AuthContextType {
     user: User | null;
     isLoading: boolean;
-    login: (email: string, password?: string) => boolean;
-    signup: (email: string, name: string, password?: string) => boolean;
-    logout: () => void;
+    login: (email: string, password: string) => Promise<boolean>;
+    signup: (email: string, name: string, password: string) => Promise<boolean>;
+    logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -30,81 +28,136 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
-    // Load user and registered users from local storage on mount
+    // Initialize auth state and listen for changes
     useEffect(() => {
-        const storedUser = localStorage.getItem('ingrecheck_user');
-        if (storedUser) {
-            try {
-                setUser(JSON.parse(storedUser));
-            } catch (e) {
-                console.error("Failed to parse user from local storage");
-                localStorage.removeItem('ingrecheck_user');
+        // Get initial session
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            if (session?.user) {
+                setUser({
+                    id: session.user.id,
+                    email: session.user.email!,
+                    name: session.user.user_metadata?.name,
+                });
             }
-        }
-        setIsLoading(false);
+            setIsLoading(false);
+        });
+
+        // Listen for auth changes
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+            if (session?.user) {
+                setUser({
+                    id: session.user.id,
+                    email: session.user.email!,
+                    name: session.user.user_metadata?.name,
+                });
+            } else {
+                setUser(null);
+            }
+        });
+
+        return () => subscription.unsubscribe();
     }, []);
 
-    const login = (email: string, password?: string) => { // Added password param
-        // Simulate backend validation
-        const storedUsers = localStorage.getItem('ingrecheck_users_db');
-        let users: RegisteredUser[] = [];
-        if (storedUsers) {
-            try {
-                users = JSON.parse(storedUsers);
-            } catch (e) {
-                users = [];
+    const login = async (email: string, password: string): Promise<boolean> => {
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            });
+
+            if (error) {
+                toast.error(error.message);
+                return false;
             }
-        }
 
-        const validUser = users.find(u => u.email === email && u.password === password);
+            if (data.user) {
+                setUser({
+                    id: data.user.id,
+                    email: data.user.email!,
+                    name: data.user.user_metadata?.name,
+                });
+                toast.success(`Welcome back!`);
+                router.push('/');
+                return true;
+            }
 
-        if (validUser) {
-            const { password, ...userWithoutPassword } = validUser;
-            setUser(userWithoutPassword);
-            localStorage.setItem('ingrecheck_user', JSON.stringify(userWithoutPassword));
-            toast.success(`Welcome back, ${validUser.name}!`);
-            router.push('/');
-            return true;
-        } else {
-            toast.error('Invalid email or password');
+            return false;
+        } catch (error) {
+            console.error('Login error:', error);
+            toast.error('An unexpected error occurred');
             return false;
         }
     };
 
-    const signup = (email: string, name: string, password?: string) => { // Added password param
-        const storedUsers = localStorage.getItem('ingrecheck_users_db');
-        let users: RegisteredUser[] = [];
-        if (storedUsers) {
-            try {
-                users = JSON.parse(storedUsers);
-            } catch (e) {
-                users = [];
-            }
-        }
+    const signup = async (email: string, name: string, password: string): Promise<boolean> => {
+        try {
+            const { data, error } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    data: {
+                        name,
+                    },
+                },
+            });
 
-        if (users.find(u => u.email === email)) {
-            toast.error('Email already registered');
+            if (error) {
+                toast.error(error.message);
+                return false;
+            }
+
+            if (data.user) {
+                // Check if email confirmation is required
+                if (data.user.identities && data.user.identities.length === 0) {
+                    toast.error('Email already registered');
+                    return false;
+                }
+
+                setUser({
+                    id: data.user.id,
+                    email: data.user.email!,
+                    name: data.user.user_metadata?.name,
+                });
+
+                toast.success(`Account created! Welcome, ${name}.`);
+
+                // Note: If email confirmation is enabled, user won't be logged in automatically
+                if (data.session) {
+                    router.push('/');
+                } else {
+                    toast.info('Please check your email to verify your account.');
+                    router.push('/login');
+                }
+
+                return true;
+            }
+
+            return false;
+        } catch (error) {
+            console.error('Signup error:', error);
+            toast.error('An unexpected error occurred');
             return false;
         }
-
-        const newUser = { id: Date.now().toString(), email, name, password }; // Storing password for demo
-        users.push(newUser);
-        localStorage.setItem('ingrecheck_users_db', JSON.stringify(users));
-
-        const { password: _, ...userWithoutPassword } = newUser;
-        setUser(userWithoutPassword);
-        localStorage.setItem('ingrecheck_user', JSON.stringify(userWithoutPassword));
-
-        toast.success(`Account created! Welcome, ${name}.`);
-        router.push('/');
-        return true;
     };
 
-    const logout = () => {
-        setUser(null);
-        localStorage.removeItem('ingrecheck_user');
-        toast.info('You have been logged out.');
-        router.push('/login');
+    const logout = async (): Promise<void> => {
+        try {
+            const { error } = await supabase.auth.signOut();
+
+            if (error) {
+                toast.error(error.message);
+                return;
+            }
+
+            setUser(null);
+            toast.info('You have been logged out.');
+            router.push('/login');
+        } catch (error) {
+            console.error('Logout error:', error);
+            toast.error('An unexpected error occurred');
+        }
     };
 
     return (

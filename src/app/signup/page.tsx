@@ -13,18 +13,21 @@ export default function SignupPage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const { signup } = useAuth();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!name || !email || !password) return;
+        if (!name || !email || !password || isLoading) return;
 
         if (password.length < 6) {
             toast.error('Password must be at least 6 characters long');
             return;
         }
 
-        signup(email, name, password);
+        setIsLoading(true);
+        await signup(email, name, password);
+        setIsLoading(false);
     };
 
     return (
@@ -69,8 +72,8 @@ export default function SignupPage() {
                                 required
                             />
                         </div>
-                        <Button type="submit" className="w-full">
-                            Sign Up
+                        <Button type="submit" className="w-full" disabled={isLoading}>
+                            {isLoading ? 'Creating account...' : 'Sign Up'}
                         </Button>
                     </form>
                     <div className="mt-4 text-center text-sm">

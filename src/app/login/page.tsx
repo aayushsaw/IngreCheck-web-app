@@ -11,13 +11,16 @@ import Link from 'next/link';
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const { login } = useAuth();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!email || !password) return;
+        if (!email || !password || isLoading) return;
 
-        login(email, password);
+        setIsLoading(true);
+        await login(email, password);
+        setIsLoading(false);
     };
 
     return (
@@ -52,8 +55,8 @@ export default function LoginPage() {
                                 required
                             />
                         </div>
-                        <Button type="submit" className="w-full">
-                            Sign In
+                        <Button type="submit" className="w-full" disabled={isLoading}>
+                            {isLoading ? 'Signing in...' : 'Sign In'}
                         </Button>
                     </form>
                     <div className="mt-4 text-center text-sm">
