@@ -16,9 +16,55 @@ export default function SignupPage() {
     const [isLoading, setIsLoading] = useState(false);
     const { signup } = useAuth();
 
+    // Validate email format and basic checks
+    const validateEmail = (email: string): boolean => {
+        // Check basic format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            toast.error('Please enter a valid email address');
+            return false;
+        }
+
+        // Check for common typos in popular domains
+        const commonDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com'];
+        const domain = email.split('@')[1]?.toLowerCase();
+
+        // Check for common typos
+        const typos: Record<string, string> = {
+            'gmial.com': 'gmail.com',
+            'gmai.com': 'gmail.com',
+            'yahooo.com': 'yahoo.com',
+            'hotmial.com': 'hotmail.com',
+            'outlok.com': 'outlook.com',
+        };
+
+        if (domain && typos[domain]) {
+            toast.error(`Did you mean ${email.split('@')[0]}@${typos[domain]}?`);
+            return false;
+        }
+
+        // Check for disposable/temporary email domains
+        const disposableDomains = [
+            'tempmail.com', 'throwaway.email', 'guerrillamail.com',
+            'mailinator.com', '10minutemail.com', 'temp-mail.org'
+        ];
+
+        if (domain && disposableDomains.includes(domain)) {
+            toast.error('Please use a permanent email address');
+            return false;
+        }
+
+        return true;
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!name || !email || !password || isLoading) return;
+
+        // Validate email
+        if (!validateEmail(email)) {
+            return;
+        }
 
         if (password.length < 6) {
             toast.error('Password must be at least 6 characters long');
