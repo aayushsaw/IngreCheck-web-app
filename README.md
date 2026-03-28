@@ -26,9 +26,18 @@
 
 ## 🚀 Overview
 
-**IngreCheck** is a modern web application designed to help consumers analyze food and cosmetic products instantly. By simply scanning a barcode, users receive a comprehensive breakdown of ingredients, nutritional quality (Nutri-Score), and environmental impact (Eco-Score).
+Here is a **simple and easy version in 4 paragraphs**:
 
-Built with a **"Biological Tech"** aesthetic, the app features a dark, immersive interface with glassmorphism effects, ensuring a premium user experience on both desktop and mobile devices.
+---
+
+**IngreCheck** is a web application that helps users check food easily. By scanning a barcode, the app shows product details like ingredients, Nutri-Score (health rating), and Eco-Score (environment impact). It helps users quickly understand whether a product is good or harmful.
+
+The main aim of IngreCheck is to make product information simple and easy to understand. Many people cannot read or understand complex ingredient labels, so this app explains everything in a clear way. It highlights harmful ingredients, additives, and allergens so users can make better choices.
+
+IngreCheck also suggests healthier alternatives for the scanned product. This helps users switch to better options without spending time searching. The app uses barcode scanning and online data sources to give fast and accurate results.
+
+The application has a modern dark design and works smoothly on both mobile and desktop. It also includes an admin panel to manage product data. Overall, IngreCheck helps people make safer and healthier decisions in their daily life.
+
 
 ## ✨ Key Features
 
