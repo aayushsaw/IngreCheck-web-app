@@ -35,21 +35,21 @@ export default function ScanPage() {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             if (stopPromise && typeof (stopPromise as any).catch === 'function') {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (stopPromise as any).catch(console.error);
+              (stopPromise as any).catch(console.warn);
             }
           }
         } catch (e) {
-          console.error("Error stopping scanner cleanup", e);
+          console.warn("Error stopping scanner cleanup", e);
         }
 
         try {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const clearPromise: any = scannerRef.current.clear();
           if (clearPromise && typeof clearPromise.catch === 'function') {
-            clearPromise.catch(console.error);
+            clearPromise.catch(console.warn);
           }
         } catch (e) {
-          console.error("Error clearing scanner cleanup", e);
+          console.warn("Error clearing scanner cleanup", e);
         }
       }
     };
@@ -63,56 +63,34 @@ export default function ScanPage() {
     if (scannerRef.current && scannerRef.current.isScanning) {
       try {
         await scannerRef.current.stop();
-      } catch (e) { console.error("Error stopping on success", e); }
+      } catch (e) { console.warn("Error stopping on success", e); }
       setScanning(false);
     }
 
     setIsLoading(true);
 
-    try {
-      // Check if it's a URL
-      if (decodedText.startsWith('http')) {
-        const confirmOpen = confirm(`Open link: ${decodedText}?`);
-        if (confirmOpen) {
-          window.location.href = decodedText;
-          return;
-        }
-        setIsLoading(false);
+    // Check if it's a URL
+    if (decodedText.startsWith('http')) {
+      const confirmOpen = confirm(`Open link: ${decodedText}?`);
+      if (confirmOpen) {
+        window.location.href = decodedText;
         return;
       }
+      setIsLoading(false);
+      return;
+    }
 
-      // Fetch product data
-      toast.info("Analyzing barcode...");
-      const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${decodedText}.json`);
-      const data = await response.json();
-
-      if (data.status === 1) {
-        toast.success(`Product Found: ${data.product.product_name || 'Product'}`);
-        router.push(`/product/${decodedText}`);
-      } else {
-        // Fallback for demo products check
-        const demoProducts = ["54491472", "fb-soda-1", "fb-soda-2", "3017624010701", "737628064502"]; // Removed "demo" to force check
-
-        if (demoProducts.includes(decodedText) || decodedText.startsWith('fb-')) {
-          router.push(`/product/${decodedText}`);
-          return;
-        }
-
-        // Relaxed fallback for valid-looking barcodes
-        if (/^\d{8,14}$/.test(decodedText)) {
-          toast.info("Unknown product, trying standard lookup...");
-          router.push(`/product/${decodedText}`);
-        } else {
-          setError("Could not find product details.");
-          setIsLoading(false);
-        }
-      }
-    } catch (err) {
-      console.error('Error fetching product:', err);
-      toast.error("Failed to connect to database.");
+    // Navigate directly — the product page handles loading & not-found states
+    // This avoids a double-fetch race condition
+    if (decodedText.startsWith('fb-') || /^\d{6,14}$/.test(decodedText)) {
+      toast.info("Barcode detected! Loading product...");
+      router.push(`/product/${decodedText}`);
+    } else {
+      setError("Not a valid product barcode.");
       setIsLoading(false);
     }
   };
+
 
   const startScanning = async () => {
     setIsLoading(true);
@@ -152,7 +130,7 @@ export default function ScanPage() {
       setIsLoading(false);
 
     } catch (err) {
-      console.error("Error starting scanner:", err);
+      console.warn("Error starting scanner:", err);
       setIsLoading(false);
       setScanning(false);
       setError("Please allow camera access to scan.");
@@ -166,7 +144,7 @@ export default function ScanPage() {
         await scannerRef.current.stop();
         setScanning(false);
       } catch (err) {
-        console.error("Failed to stop scanner", err);
+        console.warn("Failed to stop scanner", err);
       }
     }
   };
@@ -211,7 +189,7 @@ export default function ScanPage() {
       html5Qrcode.clear();
       onScanSuccess(result, null);
     } catch (err) {
-      console.error("Error scanning file", err);
+      console.warn("Error scanning file", err);
       setError("Could not detect barcode in image.");
       toast.error("No valid barcode found.");
       setIsLoading(false);
