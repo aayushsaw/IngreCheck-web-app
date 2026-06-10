@@ -13,15 +13,6 @@ import { useAuth } from '@/context/AuthContext';
 // Mock recommendations data expanded for personalization
 const allRecommendations = [
   {
-    id: '123456789123',
-    name: 'Organic Almond Butter',
-    brand: 'Whole Earth',
-    score: 90,
-    image: 'https://images.pexels.com/photos/6607387/pexels-photo-6607387.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    category: 'Spreads',
-    description: 'Made from 100% organic almonds with no added sugar or palm oil',
-  },
-  {
     id: '987654321987',
     name: 'Organic Coconut Yogurt',
     brand: 'Coconut Collaborative',
@@ -67,23 +58,28 @@ export default function RecommendationsPage() {
 
   useEffect(() => {
     // Determine top categories from history
-    const topCategories = getMostFrequentCategories();
-    setUserCategories(topCategories);
+    const fetchTopCategories = async () => {
+      const topCategories = await getMostFrequentCategories(user?.id);
+      setUserCategories(topCategories);
 
-    if (topCategories.length > 0) {
-      // Sort recommendations: items matching top categories come first
-      // We also could filter, but let's just prioritize for now
-      const sorted = [...allRecommendations].sort((a, b) => {
-        const aMatch = topCategories.some(cat => a.category.toLowerCase().includes(cat.toLowerCase()) || cat.toLowerCase().includes(a.category.toLowerCase()));
-        const bMatch = topCategories.some(cat => b.category.toLowerCase().includes(cat.toLowerCase()) || cat.toLowerCase().includes(b.category.toLowerCase()));
-        if (aMatch && !bMatch) return -1;
-        if (!aMatch && bMatch) return 1;
-        return 0;
-      });
-      setRecommendations(sorted);
+      if (topCategories.length > 0) {
+        // Sort recommendations: items matching top categories come first
+        const sorted = [...allRecommendations].sort((a, b) => {
+          const aMatch = topCategories.some(cat => a.category.toLowerCase().includes(cat.toLowerCase()) || cat.toLowerCase().includes(a.category.toLowerCase()));
+          const bMatch = topCategories.some(cat => b.category.toLowerCase().includes(cat.toLowerCase()) || cat.toLowerCase().includes(b.category.toLowerCase()));
+          if (aMatch && !bMatch) return -1;
+          if (!aMatch && bMatch) return 1;
+          return 0;
+        });
+        setRecommendations(sorted);
+      }
+      setIsLoading(false);
+    };
+
+    if (!authLoading) {
+      fetchTopCategories();
     }
-    setIsLoading(false);
-  }, []);
+  }, [user, authLoading]);
 
   if (isLoading || authLoading) {
     return <div className="min-h-screen container py-12 text-center">Loading...</div>;
