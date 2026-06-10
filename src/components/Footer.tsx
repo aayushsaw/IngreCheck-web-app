@@ -31,28 +31,34 @@ const Footer = () => {
           <div>
             <h3 className="font-poppins font-semibold text-foreground text-lg mb-6">Explore</h3>
             <ul className="space-y-4">
-              {['Features', 'Premium', 'Scanning', 'Recommendations'].map((item) => (
-                <li key={item}>
-                  <Link href={`/${item.toLowerCase()}`} className="text-muted-foreground hover:text-ingrecheck transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ingrecheck/0 group-hover:bg-ingrecheck transition-colors" />
-                    {item}
-                  </Link>
-                </li>
-              ))}
+              {['Features', 'Premium', 'Scanning', 'Recommendations'].map((item) => {
+                const route = item === 'Scanning' ? '/scan' : `/${item.toLowerCase()}`;
+                return (
+                  <li key={item}>
+                    <Link href={route} className="text-muted-foreground hover:text-ingrecheck transition-colors flex items-center gap-2 group">
+                      <span className="w-1.5 h-1.5 rounded-full bg-ingrecheck/0 group-hover:bg-ingrecheck transition-colors" />
+                      {item}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
           <div>
             <h3 className="font-poppins font-semibold text-foreground text-lg mb-6">Company</h3>
             <ul className="space-y-4">
-              {['About Us', 'Team', 'Press', 'Careers'].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="text-muted-foreground hover:text-ingrecheck transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ingrecheck/0 group-hover:bg-ingrecheck transition-colors" />
-                    {item}
-                  </Link>
-                </li>
-              ))}
+              {['About Us', 'Team', 'Press', 'Careers', 'Admin Portal'].map((item) => {
+                const route = item === 'Admin Portal' ? '/admin' : `/${item.toLowerCase().replace(' ', '-')}`;
+                return (
+                  <li key={item}>
+                    <Link href={route} className="text-muted-foreground hover:text-ingrecheck transition-colors flex items-center gap-2 group">
+                      <span className="w-1.5 h-1.5 rounded-full bg-ingrecheck/0 group-hover:bg-ingrecheck transition-colors" />
+                      {item}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
