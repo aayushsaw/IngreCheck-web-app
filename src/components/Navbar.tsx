@@ -35,6 +35,13 @@ const Navbar = () => {
                 Recommendations
               </Link>
             </li>
+            {user && (
+              <li>
+                <Link href="/profile" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Profile
+                </Link>
+              </li>
+            )}
           </ul>
           <div className="flex items-center gap-4">
             <Link href="/premium">
@@ -80,6 +87,11 @@ const Navbar = () => {
                 <Link href="/premium" className="text-foreground font-medium text-lg">
                   Premium
                 </Link>
+                {user && (
+                  <Link href="/profile" className="text-foreground font-medium text-lg">
+                    Profile
+                  </Link>
+                )}
                 {user ? (
                   <Button onClick={logout} className="mt-4 bg-primary text-white hover:bg-primary/90">Sign Out</Button>
                 ) : (
