@@ -13,7 +13,7 @@ export default function ClientBody({
   // Always render the layout structure to prevent hydration mismatches and layout shifts
   // Next.js handles the body tag injection correctly via the RootLayout
   return (
-    <body className="min-h-screen bg-background flex flex-col font-sans antialiased">
+    <body className="min-h-screen bg-background flex flex-col font-sans antialiased" suppressHydrationWarning>
       <AuthProvider>
         <Navbar />
         <main className="flex-grow w-full relative animate-fade-in flex flex-col">
