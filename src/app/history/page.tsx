@@ -17,9 +17,15 @@ export default function HistoryPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setHistory(getScanHistory());
-    setIsLoading(false);
-  }, []);
+    const fetchHistory = async () => {
+      const h = await getScanHistory(user?.id);
+      setHistory(h);
+      setIsLoading(false);
+    };
+    if (!authLoading) {
+      fetchHistory();
+    }
+  }, [user, authLoading]);
 
   const filteredHistory = activeTab === 'all'
     ? history
@@ -124,10 +130,13 @@ export default function HistoryPage() {
                     <div className="flex-1">
                       <h3 className="font-medium">{item.name}</h3>
                       <p className="text-sm text-muted-foreground">{item.brand}</p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        <span className="flex items-center gap-1">
-                          <span>Scanned on {formatDate(item.date)}</span>
-                        </span>
+                      <p className="text-xs text-muted-foreground mt-1 flex flex-wrap items-center gap-2">
+                        <span>Scanned on {formatDate(item.date)}</span>
+                        {item.count && item.count > 1 && (
+                          <span className="px-2 py-0.5 rounded-full bg-ingrecheck/10 text-ingrecheck text-[10px] font-extrabold uppercase border border-ingrecheck/20 animate-pulse">
+                            Scanned {item.count}x today
+                          </span>
+                        )}
                       </p>
                     </div>
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-medium ${getScoreColor(item.score)}`}>
