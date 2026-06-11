@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { IngreCheckIconLogo } from '@/components/IngreCheckLogo';
 
 const Footer = () => {
   return (
@@ -10,9 +11,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-2 group cursor-default">
-              <div className="w-10 h-10 bg-gradient-to-br from-ingrecheck-light to-ingrecheck rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-ingrecheck/20">
-                I
-              </div>
+              <IngreCheckIconLogo size={40} />
               <span className="font-poppins font-bold text-2xl tracking-tight text-foreground">IngreCheck</span>
             </div>
             <p className="text-muted-foreground leading-relaxed">
@@ -95,40 +94,6 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  );
-};
-
-const IngreCheckLogo = () => {
-  return (
-    <svg
-      width="32"
-      height="32"
-      viewBox="0 0 100 100"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M60.7,38.4c-4-9.3-10.6-16.5-18.7-16.5c-8,0-14.7,7.2-18.7,16.5c-3.9,9.2-9.4,28.4,0,37.8c4.7,4.7,11.8,7.6,18.7,7.6
-        c6.9,0,14-2.9,18.7-7.6C70.1,66.8,64.6,47.6,60.7,38.4z"
-        fill="#3cbd71"
-      />
-      <path
-        d="M80,38.4c0,0-19.4,3-19.4,42.5c0,0,25.5-4.7,25.5-43.9"
-        fill="#ef9e48"
-      />
-      <path
-        d="M42,46.2c1.1,0,2-0.9,2-2s-0.9-2-2-2s-2,0.9-2,2S40.9,46.2,42,46.2z"
-        fill="#FFFFFF"
-      />
-      <path
-        d="M50.3,55.6c0,4.6-3.7,8.3-8.3,8.3s-8.3-3.7-8.3-8.3s3.7-8.3,8.3-8.3S50.3,51,50.3,55.6z"
-        fill="#FFFFFF"
-      />
-      <path
-        d="M45.7,56.7c0.4,0,0.7-0.3,0.7-0.7c0-0.4-0.3-0.7-0.7-0.7c-0.4,0-0.7,0.3-0.7,0.7C45,56.4,45.3,56.7,45.7,56.7z"
-        fill="#000000"
-      />
-    </svg>
   );
 };
 
