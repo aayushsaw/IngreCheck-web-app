@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { IngreCheckIconLogo } from '@/components/IngreCheckLogo';
+import { IngreCheckLogo } from '@/components/IngreCheckLogo';
 
 const Footer = () => {
   return (
@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-2 group cursor-default">
-              <IngreCheckIconLogo size={40} />
+              <IngreCheckLogo size={40} />
               <span className="font-poppins font-bold text-2xl tracking-tight text-foreground">IngreCheck</span>
             </div>
             <p className="text-muted-foreground leading-relaxed">

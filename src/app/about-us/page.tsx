@@ -4,7 +4,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Leaf, ShieldCheck, HeartPulse, Search } from 'lucide-react';
 import Image from 'next/image';
-import { IngreCheckIconLogo } from '@/components/IngreCheckLogo';
+import { IngreCheckLogo } from '@/components/IngreCheckLogo';
 
 export default function AboutUs() {
   return (
@@ -68,7 +68,7 @@ export default function AboutUs() {
             By leveraging the massive Open Food Facts database and our own proprietary, crowdsourced repository, we analyze products using scientific frameworks like the <strong>NOVA classification system</strong> (for processing levels) and <strong>Nutri-Score</strong>. We then run the raw ingredients through our custom AI algorithm to generate a single, easy-to-understand <strong>IngreCheck Score</strong> tailored specifically to your saved dietary profile.
           </p>
           <div className="inline-flex items-center justify-center gap-2 group cursor-default bg-black/20 p-4 rounded-2xl">
-            <IngreCheckIconLogo size={48} />
+            <IngreCheckLogo size={48} />
             <span className="font-poppins font-bold text-3xl tracking-tight text-foreground">IngreCheck</span>
           </div>
         </div>
