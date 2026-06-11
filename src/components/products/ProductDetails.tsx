@@ -200,7 +200,7 @@ export default function ProductDetails({ product, productId }: ProductDetailsPro
                 </div>
               </TabsContent>
 
-              <TabsContent value="details" className="p-6">
+              <TabsContent value="details" className="p-4 sm:p-6">
                 <h2 className="font-semibold mb-4">Detailed Analysis</h2>
                 <p className="text-sm text-muted-foreground mb-4">
                   This analysis is based on the product's composition and nutritional values.
@@ -210,34 +210,36 @@ export default function ProductDetails({ product, productId }: ProductDetailsPro
                   {product.category === 'food' && (
                     <div>
                       <h3 className="font-medium mb-2">Nutritional Values (per 100g)</h3>
-                      <table className="w-full text-sm">
-                        <tbody>
-                          <tr className="border-b">
-                            <td className="py-2">Energy</td>
-                            <td className="py-2 text-right">539 kcal</td>
-                          </tr>
-                          <tr className="border-b">
-                            <td className="py-2">Fat</td>
-                            <td className="py-2 text-right">{product.nutriments.fat === 'high' ? '30.9g (High)' : '26.3g (Medium)'}</td>
-                          </tr>
-                          <tr className="border-b">
-                            <td className="py-2">Carbohydrates</td>
-                            <td className="py-2 text-right">57.5g</td>
-                          </tr>
-                          <tr className="border-b">
-                            <td className="py-2">Sugar</td>
-                            <td className="py-2 text-right">{product.nutriments.sugar === 'high' ? '56.3g (High)' : '40.1g (Medium)'}</td>
-                          </tr>
-                          <tr className="border-b">
-                            <td className="py-2">Proteins</td>
-                            <td className="py-2 text-right">6.3g</td>
-                          </tr>
-                          <tr className="border-b">
-                            <td className="py-2">Salt</td>
-                            <td className="py-2 text-right">0.11g</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                      <div className="overflow-x-auto -mx-4 sm:mx-0">
+                        <table className="w-full text-sm">
+                          <tbody>
+                            <tr className="border-b">
+                              <td className="py-2 px-4 sm:px-0">Energy</td>
+                              <td className="py-2 px-4 sm:px-0 text-right">539 kcal</td>
+                            </tr>
+                            <tr className="border-b">
+                              <td className="py-2 px-4 sm:px-0">Fat</td>
+                              <td className="py-2 px-4 sm:px-0 text-right">{product.nutriments.fat === 'high' ? '30.9g (High)' : '26.3g (Medium)'}</td>
+                            </tr>
+                            <tr className="border-b">
+                              <td className="py-2 px-4 sm:px-0">Carbohydrates</td>
+                              <td className="py-2 px-4 sm:px-0 text-right">57.5g</td>
+                            </tr>
+                            <tr className="border-b">
+                              <td className="py-2 px-4 sm:px-0">Sugar</td>
+                              <td className="py-2 px-4 sm:px-0 text-right">{product.nutriments.sugar === 'high' ? '56.3g (High)' : '40.1g (Medium)'}</td>
+                            </tr>
+                            <tr className="border-b">
+                              <td className="py-2 px-4 sm:px-0">Proteins</td>
+                              <td className="py-2 px-4 sm:px-0 text-right">6.3g</td>
+                            </tr>
+                            <tr className="border-b">
+                              <td className="py-2 px-4 sm:px-0">Salt</td>
+                              <td className="py-2 px-4 sm:px-0 text-right">0.11g</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   )}
 
@@ -246,9 +248,9 @@ export default function ProductDetails({ product, productId }: ProductDetailsPro
                       <h3 className="font-medium mb-2">Ingredient Analysis</h3>
                       <div className="space-y-2">
                         {product.ingredients.map((ingredient, index) => (
-                          <div key={index} className="flex justify-between py-2 border-b">
-                            <span>{ingredient.name}</span>
-                            <Badge variant={ingredient.risk === 'none' ? 'outline' : 'destructive'}>
+                          <div key={index} className="flex justify-between py-2 border-b text-sm">
+                            <span className="flex-1">{ingredient.name}</span>
+                            <Badge variant={ingredient.risk === 'none' ? 'outline' : 'destructive'} className="ml-2 flex-shrink-0">
                               {ingredient.risk}
                             </Badge>
                           </div>

@@ -9,51 +9,51 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Dynamic Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20">
-        {/* Background Effects */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20 px-4 sm:px-0">
+        {/* Background Effects - Responsive */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-ingrecheck-light/20 blur-[120px] rounded-full mix-blend-screen animate-pulse-slow" />
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-sky-400/10 blur-[100px] rounded-full mix-blend-screen" />
+          <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 lg:w-[800px] lg:h-[800px] bg-ingrecheck-light/20 blur-[80px] sm:blur-[100px] lg:blur-[120px] rounded-full mix-blend-screen animate-pulse-slow" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-sky-400/10 blur-[60px] sm:blur-[80px] lg:blur-[100px] rounded-full mix-blend-screen" />
         </div>
 
         <div className="container relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="text-center lg:text-left space-y-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="text-center lg:text-left space-y-6 sm:space-y-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              <div className="inline-flex items-center px-3 sm:px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-4">
                 <span className="w-2 h-2 rounded-full bg-ingrecheck animate-pulse mr-2" />
-                <span className="text-sm font-medium text-ingrecheck-light">AI-Powered Health Analysis</span>
+                <span className="text-xs sm:text-sm font-medium text-ingrecheck-light">AI-Powered Health Analysis</span>
               </div>
 
-              <h1 className="text-5xl md:text-7xl font-bold leading-tight font-poppins">
-                Know What You <br />
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight font-poppins">
+                Know What You <br className="hidden sm:inline" />
                 <span className="text-gradient">Consume.</span>
               </h1>
 
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                 IngreCheck decodes product labels instantly. We analyze ingredients to help you make safer, healthier choices for you and your family.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
-                <Link href="/scan">
-                  <Button size="lg" className="h-14 px-8 text-lg rounded-full bg-ingrecheck hover:bg-ingrecheck-dark shadow-xl shadow-ingrecheck/25 transition-all w-full sm:w-auto">
-                    <Scan className="mr-2" /> Start Scanning
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-4">
+                <Link href="/scan" className="w-full sm:w-auto">
+                  <Button size="lg" className="h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg rounded-full bg-ingrecheck hover:bg-ingrecheck-dark shadow-xl shadow-ingrecheck/25 transition-all w-full">
+                    <Scan className="mr-2 h-5 w-5" /> Start Scanning
                   </Button>
                 </Link>
-                <Link href="#features">
-                  <Button size="lg" variant="outline" className="h-14 px-8 text-lg rounded-full border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/20 transition-all w-full sm:w-auto">
+                <Link href="#features" className="w-full sm:w-auto">
+                  <Button size="lg" variant="outline" className="h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg rounded-full border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/20 transition-all w-full">
                     How it Works
                   </Button>
                 </Link>
               </div>
 
-              <div className="flex items-center justify-center lg:justify-start gap-8 pt-8 opacity-80">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 sm:gap-8 pt-8 opacity-80">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-foreground">3M+</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-foreground">3M+</p>
                   <p className="text-xs text-muted-foreground uppercase tracking-wider">Products</p>
                 </div>
-                <div className="w-px h-10 bg-border/50" />
+                <div className="hidden sm:block w-px h-10 bg-border/50" />
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-foreground">99%</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-foreground">99%</p>
                   <p className="text-xs text-muted-foreground uppercase tracking-wider">Accuracy</p>
                 </div>
               </div>
