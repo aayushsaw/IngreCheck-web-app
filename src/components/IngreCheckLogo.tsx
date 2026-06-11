@@ -22,12 +22,12 @@ export const IngreCheckLogo = ({ size = 32, className = '' }: IngreCheckLogoProp
       <path
         d="M60.7,38.4c-4-9.3-10.6-16.5-18.7-16.5c-8,0-14.7,7.2-18.7,16.5c-3.9,9.2-9.4,28.4,0,37.8c4.7,4.7,11.8,7.6,18.7,7.6
         c6.9,0,14-2.9,18.7-7.6C70.1,66.8,64.6,47.6,60.7,38.4z"
-        fill="#10B981"
+        fill="#3cbd71"
       />
-      {/* Right accent shape - Light Green */}
+      {/* Right accent shape - Orange */}
       <path
         d="M80,38.4c0,0-19.4,3-19.4,42.5c0,0,25.5-4.7,25.5-43.9"
-        fill="#34D399"
+        fill="#ef9e48"
       />
       {/* Highlight dot - White */}
       <path
